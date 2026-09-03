@@ -3,159 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="纸币比例的 3D 折纸试验台">
+  <meta name="description" content="不依赖外部引擎的 3D 折纸试验台">
   <title>折纸试验台</title>
   <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=ZCOOL+XiaoWei&display=swap">
   <style>
-    :root { --ink: #4f392f; --red: #9d3549; --rose: #c96b7a; --line: #c69f76; --panel: rgba(255, 251, 239, .76); }
+    :root { --ink: #4f392f; --red: #9d3549; --rose: #d88996; --line: #c69f76; --panel: rgba(255, 251, 239, .78); }
     * { box-sizing: border-box; }
     body { min-height: 100vh; margin: 0; color: var(--ink); background: #f3e5bd url("assets/xuan-paper-bg.png") center / cover fixed no-repeat; font-family: "Noto Serif SC", serif; }
     main { width: min(1180px, 100%); margin: 0 auto; padding: clamp(30px, 5vw, 64px) clamp(16px, 4vw, 46px) 60px; }
     header { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: clamp(24px, 4vw, 42px); }
     .eyebrow { margin: 0 0 9px; color: #9a704e; font-size: 11px; letter-spacing: .22em; }
     h1 { margin: 0; color: var(--red); font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif; font-size: clamp(38px, 5vw, 63px); font-weight: 400; letter-spacing: .04em; }
-    .spec { max-width: 255px; margin: 0; padding-bottom: 6px; color: #775a4a; font-size: 13px; line-height: 1.75; }
+    .spec { max-width: 260px; margin: 0; padding-bottom: 6px; color: #775a4a; font-size: 13px; line-height: 1.75; }
     .app { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(300px, .8fr); gap: clamp(18px, 3vw, 34px); align-items: stretch; }
-    .stage-shell { position: relative; min-height: 520px; overflow: hidden; border: 1px solid rgba(126, 78, 48, .27); background: radial-gradient(circle at 49% 44%, rgba(255, 253, 246, .96) 0 4%, rgba(255, 247, 228, .68) 48%, rgba(218, 186, 140, .26) 100%); box-shadow: 0 18px 35px rgba(95, 58, 34, .12); }
-    #stage { position: absolute; inset: 0; touch-action: none; cursor: grab; }
+    .stage-shell { position: relative; min-height: 520px; overflow: hidden; border: 1px solid rgba(126, 78, 48, .27); background: radial-gradient(circle at 49% 44%, rgba(255, 253, 246, .97) 0 4%, rgba(255, 247, 228, .68) 48%, rgba(218, 186, 140, .26) 100%); box-shadow: 0 18px 35px rgba(95, 58, 34, .12); }
+    #stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1080px; touch-action: none; cursor: grab; }
     #stage:active { cursor: grabbing; }
+    .paper-world { --orbit-x: -19deg; --orbit-y: 25deg; --fold-y-in: 0deg; --fold-x: 0deg; --flex: 0px; width: clamp(290px, 59vw, 600px); aspect-ratio: 155 / 77; position: relative; transform-style: preserve-3d; transform: rotateX(var(--orbit-x)) rotateY(var(--orbit-y)); transition: transform .12s ease-out; }
+    .panel { position: absolute; overflow: hidden; transform-style: preserve-3d; backface-visibility: visible; border: 1px solid rgba(111, 39, 56, .56); background-color: var(--rose); background-image: repeating-radial-gradient(ellipse at 50% 50%, transparent 0 9px, rgba(255,248,226,.17) 10px 11px, transparent 12px 20px), linear-gradient(120deg, rgba(255,246,224,.42), transparent 35%, rgba(104,33,55,.13) 100%); box-shadow: inset 0 0 0 1px rgba(255,247,226,.23); }
+    .panel::after { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(255,247,226,.18); pointer-events: none; }
+    .panel::before { content: ""; position: absolute; z-index: 2; pointer-events: none; inset: 0; opacity: .25; background: linear-gradient(90deg, transparent 49.5%, rgba(103,36,55,.68) 49.8% 50.2%, transparent 50.5%), linear-gradient(transparent 49.5%, rgba(103,36,55,.42) 49.8% 50.2%, transparent 50.5%); }
+    .top-left { left: 0; top: 0; width: 50%; height: 50%; }
+    .top-right { left: 50%; top: 0; width: 50%; height: 50%; transform-origin: left center; transform: rotateY(var(--fold-y-in)) translateZ(var(--flex)); }
+    .bottom-left { left: 0; top: 50%; width: 50%; height: 50%; transform-origin: center top; transform: rotateX(var(--fold-x)) translateZ(var(--flex)); }
+    .bottom-right { left: 50%; top: 50%; width: 50%; height: 50%; transform-origin: left top; transform: rotateY(var(--fold-y-in)) rotateX(var(--fold-x)) translateZ(var(--flex)); }
+    .top-left .note-mark, .bottom-right .note-mark { position: absolute; z-index: 3; color: rgba(102, 33, 55, .67); font: 600 clamp(9px, 1.3vw, 16px) / 1 Georgia, serif; letter-spacing: .1em; }
+    .top-left .note-mark { top: 15%; left: 13%; } .bottom-right .note-mark { right: 13%; bottom: 15%; transform: rotate(180deg); }
+    .edge-shadow { position: absolute; inset: 0; z-index: 5; pointer-events: none; transform: translateZ(3px); background: linear-gradient(90deg, transparent 49.7%, rgba(69,20,37,.24) 50%, transparent 50.3%), linear-gradient(transparent 49.7%, rgba(69,20,37,.17) 50%, transparent 50.3%); }
     .stage-caption { position: absolute; top: 18px; left: 20px; display: grid; gap: 3px; pointer-events: none; }
-    .stage-caption b { color: var(--red); font-size: 12px; letter-spacing: .15em; }
-    .stage-caption span { color: #8b6a57; font-size: 11px; }
+    .stage-caption b { color: var(--red); font-size: 12px; letter-spacing: .15em; } .stage-caption span { color: #8b6a57; font-size: 11px; }
     .dimension { position: absolute; right: 20px; bottom: 18px; display: flex; align-items: center; gap: 10px; color: #946e51; font-size: 11px; letter-spacing: .08em; pointer-events: none; }
     .dimension::before { content: ""; width: 70px; height: 1px; background: currentColor; box-shadow: 0 -3px 0 -2px currentColor, 0 3px 0 -2px currentColor; }
     .controls { display: flex; flex-direction: column; justify-content: center; padding: clamp(22px, 3.5vw, 36px); border: 1px solid rgba(126, 78, 48, .27); background: var(--panel); box-shadow: 0 18px 35px rgba(95, 58, 34, .08); }
     .controls h2 { margin: 0; color: var(--red); font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif; font-size: 32px; font-weight: 400; }
     .controls > p { margin: 9px 0 29px; color: #76594b; font-size: 13px; line-height: 1.8; }
-    .control { margin-bottom: 25px; }
-    .control-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 11px; font-size: 14px; }
-    output { color: var(--red); font-variant-numeric: tabular-nums; }
+    .control { margin-bottom: 25px; }.control-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 11px; font-size: 14px; } output { color: var(--red); font-variant-numeric: tabular-nums; }
     input[type="range"] { width: 100%; height: 5px; margin: 0; appearance: none; background: rgba(157, 53, 73, .22); outline: none; }
-    input[type="range"]::-webkit-slider-thumb { width: 18px; height: 18px; appearance: none; border: 2px solid #fff7e8; border-radius: 50%; background: var(--red); box-shadow: 0 2px 6px rgba(77, 33, 42, .25); cursor: pointer; }
-    input[type="range"]::-moz-range-thumb { width: 15px; height: 15px; border: 2px solid #fff7e8; border-radius: 50%; background: var(--red); box-shadow: 0 2px 6px rgba(77, 33, 42, .25); cursor: pointer; }
-    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
-    button { min-height: 43px; border: 1px solid rgba(130, 51, 69, .46); background: transparent; color: var(--red); font: inherit; font-size: 13px; cursor: pointer; transition: background .2s, color .2s, transform .2s; }
-    button:hover { background: var(--red); color: #fff9eb; }
-    button:active { transform: translateY(1px); }
-    .tip { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid rgba(126, 78, 48, .2); color: #8a6c58; font-size: 12px; line-height: 1.8; }
-    .tip b { color: var(--red); font-weight: 600; }
-    .fallback { display: grid; place-items: center; height: 100%; padding: 30px; text-align: center; color: #77594a; line-height: 1.8; }
-    @media (max-width: 820px) { body { background-attachment: scroll; } header { display: block; } .spec { max-width: 550px; margin-top: 12px; } .app { grid-template-columns: 1fr; } .stage-shell { min-height: min(67vh, 570px); } .controls { padding: 25px; } }
-    @media (max-width: 460px) { main { padding: 30px 14px 44px; } .stage-shell { min-height: 430px; } .stage-caption { top: 14px; left: 15px; } .dimension { right: 14px; bottom: 14px; } }
-    @media (prefers-reduced-motion: reduce) { button { transition: none; } }
+    input[type="range"]::-webkit-slider-thumb { width: 18px; height: 18px; appearance: none; border: 2px solid #fff7e8; border-radius: 50%; background: var(--red); box-shadow: 0 2px 6px rgba(77, 33, 42, .25); cursor: pointer; } input[type="range"]::-moz-range-thumb { width: 15px; height: 15px; border: 2px solid #fff7e8; border-radius: 50%; background: var(--red); }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; } button { min-height: 43px; border: 1px solid rgba(130, 51, 69, .46); background: transparent; color: var(--red); font: inherit; font-size: 13px; cursor: pointer; transition: background .2s, color .2s, transform .2s; } button:hover { background: var(--red); color: #fff9eb; } button:active { transform: translateY(1px); }
+    .tip { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid rgba(126, 78, 48, .2); color: #8a6c58; font-size: 12px; line-height: 1.8; }.tip b { color: var(--red); font-weight: 600; }
+    @media (max-width: 820px) { body { background-attachment: scroll; } header { display: block; }.spec { max-width: 550px; margin-top: 12px; }.app { grid-template-columns: 1fr; }.stage-shell { min-height: min(67vh, 570px); }.controls { padding: 25px; }.paper-world { width: min(78vw, 560px); } }
+    @media (max-width: 460px) { main { padding: 30px 14px 44px; }.stage-shell { min-height: 430px; }.stage-caption { top: 14px; left: 15px; }.dimension { right: 14px; bottom: 14px; }.paper-world { width: 82vw; } }
+    @media (prefers-reduced-motion: reduce) { .paper-world, button { transition: none; } }
   </style>
 </head>
 <body>
   <main>
-    <header>
-      <div><p class="eyebrow">ORIGAMI MOTION STUDY · NO GRAVITY</p><h1>纸币折纸试验台</h1></div>
-      <p class="spec">默认纸张比例为人民币 100 元：<strong>155 × 77 mm</strong>。纸面为抽象材质，不复刻钞票图案。</p>
-    </header>
+    <header><div><p class="eyebrow">ORIGAMI MOTION STUDY · NO GRAVITY</p><h1>纸币折纸试验台</h1></div><p class="spec">默认纸张比例为人民币 100 元：<strong>155 × 77 mm</strong>。纸面使用抽象材质，不复刻钞票图案。</p></header>
     <section class="app" aria-label="3D 折纸模拟器">
-      <div class="stage-shell">
-        <div id="stage" aria-label="可拖拽旋转的 3D 纸张"></div>
-        <div class="stage-caption"><b>LIVE PAPER</b><span>单指 / 鼠标拖拽旋转视角</span></div>
-        <div class="dimension">155 × 77 mm</div>
-      </div>
-      <aside class="controls">
-        <h2>折纸控制</h2>
-        <p>拖动滑块设定折叠目标；纸面会用轻微弹簧缓动抵达位置，并保留细小弯曲。</p>
-        <label class="control" for="verticalFold"><span class="control-head"><span>右侧向内折</span><output id="verticalValue">0°</output></span><input id="verticalFold" type="range" min="0" max="170" value="0"></label>
-        <label class="control" for="horizontalFold"><span class="control-head"><span>下侧向上折</span><output id="horizontalValue">0°</output></span><input id="horizontalFold" type="range" min="0" max="170" value="0"></label>
-        <div class="actions"><button id="demoButton" type="button">自动演示</button><button id="resetButton" type="button">展平纸张</button></div>
-        <p class="tip"><b>无重力：</b>松手后纸张不会坠落。后续会把实际猫咪的每条折线加入此模型，按步骤做连续动画。</p>
-      </aside>
+      <div class="stage-shell"><div id="stage" aria-label="可拖拽旋转的 3D 纸张"><div class="paper-world" id="paper"><div class="panel top-left"><span class="note-mark">ORIGAMI</span></div><div class="panel top-right"></div><div class="panel bottom-left"></div><div class="panel bottom-right"><span class="note-mark">155 × 77</span></div><div class="edge-shadow"></div></div></div><div class="stage-caption"><b>LIVE PAPER</b><span>单指 / 鼠标拖拽旋转视角</span></div><div class="dimension">155 × 77 mm</div></div>
+      <aside class="controls"><h2>折纸控制</h2><p>拖动滑块设定折叠目标；纸面通过弹簧缓动抵达位置，折线周围会有很轻的延展与回弹。</p><label class="control" for="verticalFold"><span class="control-head"><span>右侧向内折</span><output id="verticalValue">0°</output></span><input id="verticalFold" type="range" min="0" max="170" value="0"></label><label class="control" for="horizontalFold"><span class="control-head"><span>下侧向上折</span><output id="horizontalValue">0°</output></span><input id="horizontalFold" type="range" min="0" max="170" value="0"></label><div class="actions"><button id="demoButton" type="button">自动演示</button><button id="resetButton" type="button">展平纸张</button></div><p class="tip"><b>完全离线：</b>不再加载第三方 3D 引擎。后续会把猫咪折法的真实折线接入这套模型。</p></aside>
     </section>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
   <script>
     (() => {
-      const host = document.getElementById("stage");
-      if (!window.THREE) { host.innerHTML = '<div class="fallback">3D 引擎未能加载。请检查网络后刷新页面。</div>'; return; }
-
-      const THREE = window.THREE;
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(32, 1, .1, 1000);
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
-      host.appendChild(renderer.domElement);
-
-      const group = new THREE.Group();
-      scene.add(group);
-      const lightA = new THREE.HemisphereLight(0xfffbef, 0x815847, 2.1);
-      scene.add(lightA);
-      const lightB = new THREE.DirectionalLight(0xffdfbf, 2.3);
-      lightB.position.set(-90, 95, 150);
-      scene.add(lightB);
-
-      const canvas = document.createElement("canvas");
-      canvas.width = 1024; canvas.height = 512;
-      const ctx = canvas.getContext("2d");
-      ctx.fillStyle = "#d88a96"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "rgba(255,246,225,.38)"; ctx.lineWidth = 3;
-      for (let i = -300; i < 1250; i += 42) { ctx.beginPath(); ctx.arc(i, 256, 190, -.72, .72); ctx.stroke(); }
-      ctx.strokeStyle = "rgba(106,38,58,.28)"; ctx.lineWidth = 1;
-      for (let i = 35; i < 500; i += 26) { ctx.beginPath(); ctx.moveTo(0, i); ctx.bezierCurveTo(285, i - 35, 650, i + 35, 1024, i); ctx.stroke(); }
-      ctx.fillStyle = "rgba(110,38,58,.68)"; ctx.font = "600 34px serif"; ctx.textAlign = "center";
-      ctx.fillText("ORIGAMI · 155 × 77", 512, 278);
-      const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
-      const geometry = new THREE.PlaneGeometry(155, 77, 42, 24);
-      const original = geometry.attributes.position.array.slice();
-      const material = new THREE.MeshStandardMaterial({ map: texture, roughness: .74, metalness: 0, side: THREE.DoubleSide });
-      const paper = new THREE.Mesh(geometry, material);
-      group.add(paper);
-
-      const creaseMaterial = new THREE.LineDashedMaterial({ color: 0x783246, dashSize: 2.5, gapSize: 1.8, transparent: true, opacity: .68 });
-      const creaseGeometry = new THREE.BufferGeometry();
-      creaseGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(12), 3));
-      const creases = new THREE.LineSegments(creaseGeometry, creaseMaterial);
-      group.add(creases);
-
-      const state = { targetY: 0, targetX: 0, currentY: 0, currentX: 0, velocityY: 0, velocityX: 0, demo: false, demoTime: 0, orbitX: -.52, orbitY: .55, dragging: false, lastX: 0, lastY: 0 };
-      const vertical = document.getElementById("verticalFold");
-      const horizontal = document.getElementById("horizontalFold");
-      const verticalValue = document.getElementById("verticalValue");
-      const horizontalValue = document.getElementById("horizontalValue");
-      function setTarget() { state.demo = false; state.targetY = Number(vertical.value); state.targetX = Number(horizontal.value); verticalValue.value = `${vertical.value}°`; horizontalValue.value = `${horizontal.value}°`; verticalValue.textContent = verticalValue.value; horizontalValue.textContent = horizontalValue.value; }
-      vertical.addEventListener("input", setTarget); horizontal.addEventListener("input", setTarget);
-      document.getElementById("resetButton").addEventListener("click", () => { state.demo = false; vertical.value = 0; horizontal.value = 0; setTarget(); });
-      document.getElementById("demoButton").addEventListener("click", () => { state.demo = !state.demo; state.demoTime = 0; document.getElementById("demoButton").textContent = state.demo ? "暂停演示" : "自动演示"; });
-
-      function deformPoint(x, y, yAngle, xAngle, flex) {
-        let px = x, py = y, pz = 0;
-        const yRad = THREE.MathUtils.degToRad(yAngle);
-        if (x > 0) { const bend = Math.sin((x / 77.5) * Math.PI) * Math.sin(yRad) * 1.25; px = x * Math.cos(yRad); pz = -x * Math.sin(yRad) + bend; }
-        const xRad = THREE.MathUtils.degToRad(xAngle);
-        if (y < 0) { const baseY = py; const baseZ = pz; const bend = Math.sin((-y / 38.5) * Math.PI) * Math.sin(xRad) * 1.1; py = baseY * Math.cos(xRad) - baseZ * Math.sin(xRad); pz = baseY * Math.sin(xRad) + baseZ * Math.cos(xRad) + bend; }
-        const soft = Math.sin(((x + 77.5) / 155) * Math.PI) * Math.sin(((y + 38.5) / 77) * Math.PI) * flex;
-        return [px, py, pz + soft];
+      const paper = document.getElementById("paper"); const stage = document.getElementById("stage");
+      const vertical = document.getElementById("verticalFold"); const horizontal = document.getElementById("horizontalFold");
+      const verticalValue = document.getElementById("verticalValue"); const horizontalValue = document.getElementById("horizontalValue"); const demoButton = document.getElementById("demoButton");
+      const state = { targetY: 0, targetX: 0, currentY: 0, currentX: 0, speedY: 0, speedX: 0, orbitX: -19, orbitY: 25, demo: false, demoTime: 0, drag: false, lastX: 0, lastY: 0 };
+      function syncLabels() { verticalValue.textContent = `${Math.round(state.targetY)}°`; horizontalValue.textContent = `${Math.round(state.targetX)}°`; }
+      function setTargets() { state.demo = false; demoButton.textContent = "自动演示"; state.targetY = Number(vertical.value); state.targetX = Number(horizontal.value); syncLabels(); }
+      vertical.addEventListener("input", setTargets); horizontal.addEventListener("input", setTargets);
+      document.getElementById("resetButton").addEventListener("click", () => { state.demo = false; demoButton.textContent = "自动演示"; vertical.value = 0; horizontal.value = 0; setTargets(); });
+      demoButton.addEventListener("click", () => { state.demo = !state.demo; state.demoTime = 0; demoButton.textContent = state.demo ? "暂停演示" : "自动演示"; });
+      stage.addEventListener("pointerdown", (event) => { state.drag = true; state.lastX = event.clientX; state.lastY = event.clientY; stage.setPointerCapture(event.pointerId); });
+      stage.addEventListener("pointermove", (event) => { if (!state.drag) return; state.orbitY = Math.max(-52, Math.min(60, state.orbitY + (event.clientX - state.lastX) * .35)); state.orbitX = Math.max(-55, Math.min(36, state.orbitX - (event.clientY - state.lastY) * .3)); state.lastX = event.clientX; state.lastY = event.clientY; });
+      stage.addEventListener("pointerup", () => { state.drag = false; }); stage.addEventListener("pointercancel", () => { state.drag = false; });
+      function frame(time) {
+        if (state.demo) { state.demoTime += .012; state.targetY = Math.max(0, Math.sin(state.demoTime)) * 135; state.targetX = Math.max(0, Math.sin(state.demoTime - .85)) * 125; vertical.value = Math.round(state.targetY); horizontal.value = Math.round(state.targetX); syncLabels(); }
+        const spring = .115, damping = .76;
+        state.speedY = (state.speedY + (state.targetY - state.currentY) * spring) * damping; state.speedX = (state.speedX + (state.targetX - state.currentX) * spring) * damping;
+        state.currentY += state.speedY; state.currentX += state.speedX;
+        const flex = Math.min(2.1, (Math.abs(state.speedX) + Math.abs(state.speedY)) * .24 + Math.abs(Math.sin(time * .0013)) * .14);
+        paper.style.setProperty("--fold-y-in", `${-state.currentY}deg`); paper.style.setProperty("--fold-x", `${state.currentX}deg`); paper.style.setProperty("--orbit-x", `${state.orbitX}deg`); paper.style.setProperty("--orbit-y", `${state.orbitY}deg`); paper.style.setProperty("--flex", `${flex}px`);
+        requestAnimationFrame(frame);
       }
-      function updatePaper(time) {
-        const spring = .13, damping = .74;
-        state.velocityY = (state.velocityY + (state.targetY - state.currentY) * spring) * damping;
-        state.velocityX = (state.velocityX + (state.targetX - state.currentX) * spring) * damping;
-        state.currentY += state.velocityY; state.currentX += state.velocityX;
-        const flex = Math.min(1.25, Math.abs(state.velocityY) + Math.abs(state.velocityX)) * .5 + Math.sin(time * .0013) * .08;
-        const position = geometry.attributes.position.array;
-        for (let i = 0; i < position.length; i += 3) { const p = deformPoint(original[i], original[i + 1], state.currentY, state.currentX, flex); position[i] = p[0]; position[i + 1] = p[1]; position[i + 2] = p[2]; }
-        geometry.attributes.position.needsUpdate = true; geometry.computeVertexNormals();
-        const points = creaseGeometry.attributes.position.array;
-        const a = deformPoint(0, -38.5, state.currentY, state.currentX, flex); const b = deformPoint(0, 38.5, state.currentY, state.currentX, flex);
-        const c = deformPoint(-77.5, 0, state.currentY, state.currentX, flex); const d = deformPoint(77.5, 0, state.currentY, state.currentX, flex);
-        points.set([...a, ...b, ...c, ...d]); creaseGeometry.attributes.position.needsUpdate = true; creases.computeLineDistances();
-      }
-      function resize() { const w = host.clientWidth, h = host.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
-      new ResizeObserver(resize).observe(host); resize();
-      function orbitCamera() { const radius = 260; const elevation = THREE.MathUtils.clamp(state.orbitY, -.2, 1.25); camera.position.set(Math.sin(state.orbitX) * Math.cos(elevation) * radius, Math.sin(elevation) * radius, Math.cos(state.orbitX) * Math.cos(elevation) * radius); camera.lookAt(0, 0, 0); }
-      host.addEventListener("pointerdown", (event) => { state.dragging = true; state.lastX = event.clientX; state.lastY = event.clientY; host.setPointerCapture(event.pointerId); });
-      host.addEventListener("pointermove", (event) => { if (!state.dragging) return; state.orbitX += (event.clientX - state.lastX) * .008; state.orbitY = THREE.MathUtils.clamp(state.orbitY + (event.clientY - state.lastY) * .008, -.1, 1.22); state.lastX = event.clientX; state.lastY = event.clientY; });
-      host.addEventListener("pointerup", () => { state.dragging = false; }); host.addEventListener("pointercancel", () => { state.dragging = false; });
-      function animate(time) {
-        if (state.demo) { state.demoTime += .012; const phase = Math.sin(state.demoTime); state.targetY = Math.max(0, phase) * 135; state.targetX = Math.max(0, Math.sin(state.demoTime - .85)) * 125; vertical.value = Math.round(state.targetY); horizontal.value = Math.round(state.targetX); verticalValue.textContent = `${vertical.value}°`; horizontalValue.textContent = `${horizontal.value}°`; }
-        updatePaper(time); orbitCamera(); renderer.render(scene, camera); requestAnimationFrame(animate);
-      }
-      requestAnimationFrame(animate);
+      requestAnimationFrame(frame);
     })();
   </script>
 </body>
