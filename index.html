@@ -3,56 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="百元纸币尖耳猫折叠示意">
-  <title>纸币尖耳猫折纸</title>
+  <title>尖耳猫折纸 · 预折步骤</title>
   <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=ZCOOL+XiaoWei&display=swap">
   <style>
-    :root { --ink: #543a32; --red: #c25b70; --deep-red: #823344; --line: #9c5a48; }
+    :root { --ink: #533b32; --red: #c15c70; --deep: #813345; --fold: #96523f; --cream: #fffaf0; --note: #dc8895; --note-light: #f0b3ba; }
     * { box-sizing: border-box; }
     body { min-height: 100vh; margin: 0; color: var(--ink); background: #f3e5bd url("assets/xuan-paper-bg.png") center / cover fixed no-repeat; font-family: "Noto Serif SC", serif; }
-    main { width: min(1120px, 100%); margin: 0 auto; padding: clamp(40px, 7vw, 84px) clamp(18px, 4vw, 46px) 64px; }
-    header { max-width: 660px; margin: 0 auto clamp(34px, 6vw, 58px); text-align: center; }
-    .eyebrow { margin: 0 0 12px; color: #a36f4d; font-size: 12px; letter-spacing: .22em; }
-    h1 { margin: 0; color: var(--deep-red); font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif; font-size: clamp(36px, 7vw, 68px); font-weight: 400; letter-spacing: .05em; }
-    .intro { margin: 15px auto 0; color: #76594c; font-size: 15px; line-height: 1.9; }
-    .guide { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .step { position: relative; min-height: 315px; padding: 25px 20px 20px; overflow: hidden; background: rgba(255, 251, 239, .67); border: 1px solid rgba(154, 107, 73, .28); box-shadow: 0 10px 24px rgba(107, 66, 38, .08); }
-    .number { position: absolute; top: 15px; left: 18px; color: rgba(184, 73, 92, .17); font: 900 clamp(52px, 6vw, 72px) / 1 Georgia, serif; }
-    .drawing { position: relative; z-index: 1; height: 205px; display: grid; place-items: center; }
-    svg { width: min(100%, 220px); height: 196px; overflow: visible; }
-    .step h2 { position: relative; z-index: 1; margin: 8px 0 4px; color: var(--deep-red); font-size: 17px; font-weight: 700; letter-spacing: .08em; }
-    .step p { position: relative; z-index: 1; margin: 0; color: #76594c; font-size: 13px; line-height: 1.7; }
-    .note { fill: #d97d8d; stroke: #8d3d50; stroke-width: 2; }
-    .light { fill: #efadb5; stroke: #8d3d50; stroke-width: 2; }
-    .crease { fill: none; stroke: #8d3d50; stroke-width: 2; stroke-dasharray: 5 5; }
-    .arrow { fill: none; stroke: #9f613e; stroke-width: 2; marker-end: url(#arrow); }
-    .thin { fill: none; stroke: #8d3d50; stroke-width: 1.3; opacity: .72; }
-    .cat-face { fill: #fff9eb; stroke: #8d3d50; stroke-width: 1.6; }
-    .caption { fill: #865a47; font: 12px "Noto Serif SC", serif; text-anchor: middle; }
-    .final { grid-column: span 3; min-height: 330px; display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 30px; padding: 36px clamp(22px, 5vw, 70px); background: rgba(255, 251, 239, .78); }
-    .final .drawing { height: 250px; }
-    .final svg { width: min(100%, 265px); height: 245px; }
-    .final h2 { margin: 0 0 12px; color: var(--deep-red); font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif; font-size: clamp(28px, 4vw, 44px); font-weight: 400; }
-    .final p { margin: 0; color: #76594c; font-size: 15px; line-height: 1.9; }
-    @media (max-width: 760px) { body { background-attachment: scroll; } .guide { grid-template-columns: repeat(2, 1fr); gap: 14px; } .step { min-height: 292px; padding: 21px 14px 16px; } .drawing { height: 183px; } svg { height: 176px; } .final { grid-column: span 2; grid-template-columns: 1fr; text-align: center; gap: 8px; } .final .drawing { order: 2; } }
-    @media (max-width: 460px) { .guide { grid-template-columns: 1fr; } .step { min-height: 280px; } .final { grid-column: span 1; } }
+    main { width: min(1240px, 100%); margin: 0 auto; padding: clamp(38px, 7vw, 78px) clamp(16px, 4vw, 44px) 64px; }
+    header { max-width: 710px; margin: 0 auto clamp(30px, 5vw, 54px); text-align: center; }
+    .eyebrow { margin: 0 0 10px; color: #a06e4e; font-size: 12px; letter-spacing: .2em; }
+    h1 { margin: 0; color: var(--deep); font-family: "ZCOOL XiaoWei", "Noto Serif SC", serif; font-weight: 400; font-size: clamp(36px, 6vw, 64px); letter-spacing: .05em; }
+    .intro { margin: 15px auto 0; color: #795c4e; font-size: 15px; line-height: 1.9; }
+    .guide { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+    .step { position: relative; min-height: 326px; overflow: hidden; padding: 22px 16px 17px; background: rgba(255, 251, 239, .72); border: 1px solid rgba(155, 106, 72, .25); box-shadow: 0 10px 22px rgba(105, 63, 38, .07); }
+    .number { position: absolute; top: 12px; left: 14px; color: rgba(184, 73, 92, .16); font: 900 57px / 1 Georgia, serif; }
+    .drawing { position: relative; z-index: 1; height: 218px; display: grid; place-items: center; }
+    svg { width: min(100%, 238px); height: 207px; overflow: visible; }
+    .step h2 { position: relative; z-index: 1; margin: 5px 0 5px; color: var(--deep); font-size: 16px; letter-spacing: .06em; }
+    .step p { position: relative; z-index: 1; margin: 0; color: #785a4c; font-size: 13px; line-height: 1.7; }
+    .paper { fill: var(--note); stroke: #8e3d50; stroke-width: 2; }
+    .paper-light { fill: var(--note-light); stroke: #8e3d50; stroke-width: 2; }
+    .crease { fill: none; stroke: #8e3d50; stroke-width: 1.8; stroke-dasharray: 5 5; }
+    .edge { fill: none; stroke: #8e3d50; stroke-width: 1.5; opacity: .72; }
+    .arrow { fill: none; stroke: var(--fold); stroke-width: 2; marker-end: url(#arrow); }
+    .label { fill: #825948; font: 11px "Noto Serif SC", serif; text-anchor: middle; }
+    .tag { display: inline-block; margin-top: 28px; padding: 7px 12px; border: 1px solid rgba(129, 51, 69, .32); color: var(--deep); background: rgba(255,250,240,.62); font-size: 12px; letter-spacing: .1em; }
+    @media (max-width: 980px) { .guide { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } .step { min-height: 310px; } }
+    @media (max-width: 520px) { body { background-attachment: scroll; } main { padding: 38px 14px; } .guide { grid-template-columns: 1fr; } .step { min-height: 290px; } .drawing { height: 190px; } svg { height: 181px; } }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <p class="eyebrow">FOLDING NOTE · POINTED-EAR CAT</p>
-      <h1>百元折纸 · 尖耳猫</h1>
-      <p class="intro">按照照片的成品结构重绘：耳朵从上端打开，身体向下收束，尾巴从左下角翻出。虚线表示折痕，箭头表示翻折方向。</p>
+      <p class="eyebrow">POINTED-EAR CAT · PRE-FOLD BASE</p>
+      <h1>尖耳猫的预折步骤</h1>
+      <p class="intro">只依据你提供的前段截图绘制。这里先完成基础纸型，不提前猜测后面的耳朵、尾巴或猫脸。</p>
+      <span class="tag">1:2 长方形纸币 / 纸张</span>
     </header>
-    <section class="guide" aria-label="纸币尖耳猫折叠步骤">
-      <article class="step"><span class="number">01</span><div class="drawing"><svg viewBox="0 0 220 190"><rect class="note" x="24" y="57" width="172" height="78" rx="3"></rect><path class="crease" d="M110 57 V135"></path><path class="thin" d="M35 70 H185 M35 122 H185"></path><text class="caption" x="110" y="154">先压出中线</text></svg></div><h2>横向平铺，定中线</h2><p>把纸币横放，沿中央竖线轻压出折痕，作为两只耳朵与身体的对称轴。</p></article>
-      <article class="step"><span class="number">02</span><div class="drawing"><svg viewBox="0 0 220 190"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#9f613e"></path></marker></defs><rect class="light" x="29" y="48" width="162" height="94" rx="3"></rect><path class="note" d="M29 48 L82 48 L82 142 L29 142 Z M191 48 L138 48 L138 142 L191 142 Z"></path><path class="arrow" d="M49 32 C65 20 80 24 96 42"></path><path class="arrow" d="M171 32 C155 20 140 24 124 42"></path><path class="crease" d="M82 48 V142 M138 48 V142"></path></svg></div><h2>两侧向内收窄</h2><p>左右边分别向中线翻折，先把大纸面收成适合塑形的细长纸条。</p></article>
-      <article class="step"><span class="number">03</span><div class="drawing"><svg viewBox="0 0 220 190"><path class="note" d="M60 40 H160 V155 H60 Z"></path><path class="light" d="M60 40 L102 84 L82 40 Z"></path><path class="light" d="M160 40 L118 84 L138 40 Z"></path><path class="arrow" d="M77 27 L102 63"></path><path class="arrow" d="M143 27 L118 63"></path><path class="crease" d="M60 40 L102 84 M160 40 L118 84"></path></svg></div><h2>打开两只尖耳朵</h2><p>上端左右角向外翻开并压尖；耳尖越利落，猫咪的轮廓越清楚。</p></article>
-      <article class="step"><span class="number">04</span><div class="drawing"><svg viewBox="0 0 220 190"><path class="note" d="M60 38 L94 72 L110 61 L126 72 L160 38 V153 H60 Z"></path><path class="cat-face" d="M78 79 L110 62 L142 79 L133 112 H87 Z"></path><path class="thin" d="M95 91 L101 92 M125 91 L119 92 M104 102 L110 106 L116 102"></path><path class="crease" d="M78 79 L110 62 L142 79"></path><path class="arrow" d="M73 64 C83 72 88 75 97 80"></path><path class="arrow" d="M147 64 C137 72 132 75 123 80"></path></svg></div><h2>压出猫脸的上缘</h2><p>将两只耳朵之间的纸面向内压实，形成脸部的 V 形上缘与中央鼻梁。</p></article>
-      <article class="step"><span class="number">05</span><div class="drawing"><svg viewBox="0 0 220 190"><path class="note" d="M62 37 L96 72 L110 61 L124 72 L158 37 V158 L141 174 H79 L62 158 Z"></path><path class="cat-face" d="M80 79 L110 62 L140 79 L131 111 H89 Z"></path><path class="crease" d="M62 136 H158"></path><path class="arrow" d="M51 151 C71 147 83 145 95 139"></path><path class="arrow" d="M169 151 C149 147 137 145 125 139"></path><path class="thin" d="M96 92 L102 93 M124 92 L118 93 M104 102 L110 106 L116 102"></path></svg></div><h2>收出圆润身体</h2><p>下半部两侧向内压折并略微收角，留下中间竖线，猫的身体就会成形。</p></article>
-      <article class="step"><span class="number">06</span><div class="drawing"><svg viewBox="0 0 220 190"><path class="note" d="M66 34 L97 68 L110 59 L123 68 L154 34 V150 L137 169 H83 L66 150 Z"></path><path class="cat-face" d="M82 76 L110 60 L138 76 L130 106 H90 Z"></path><path class="light" d="M83 151 L148 151 L137 169 H96 Z"></path><path class="light" d="M83 150 C57 147 45 155 33 146 L41 130 C55 139 68 137 89 139 Z"></path><path class="arrow" d="M29 117 C45 122 55 128 66 139"></path><path class="crease" d="M83 150 H148"></path></svg></div><h2>翻出左下角的尾巴</h2><p>保留左下角的纸条向外翻，再回折一次，让尾巴呈现照片中的弯曲姿态。</p></article>
-      <article class="step final"><div><h2>完成 · 尖耳朵小猫</h2><p>最后把两只耳朵、脸部尖角、身体中线和尾巴都压实。照片里的猫咪带有自然的折痕与不完全对称，这正是手折出来的可爱之处。</p></div><div class="drawing"><svg viewBox="0 0 265 240"><path class="note" d="M78 26 L120 69 L132 58 L144 69 L186 26 V180 L167 203 H98 L78 180 Z"></path><path class="light" d="M78 26 L120 69 L100 26 Z M186 26 L144 69 L164 26 Z"></path><path class="cat-face" d="M95 78 L132 59 L169 78 L158 118 H106 Z"></path><path class="thin" d="M113 94 L120 95 M151 94 L144 95 M124 105 L132 111 L140 105 M110 108 L96 105 M110 114 L95 117 M154 108 L169 105 M154 114 L170 117"></path><path class="light" d="M98 175 L168 175 L157 203 H106 Z"></path><path class="light" d="M103 168 C75 167 59 177 38 164 L48 143 C63 154 79 149 107 154 Z"></path></svg></div></article>
+    <section class="guide" aria-label="尖耳猫预折步骤">
+      <article class="step"><span class="number">01</span><div class="drawing"><svg viewBox="0 0 230 205"><rect class="paper" x="70" y="16" width="90" height="172" rx="3"></rect><path class="edge" d="M80 28 H150 M80 176 H150"></path><text class="label" x="115" y="199">竖向放置，比例 1:2</text></svg></div><h2>准备长方形纸张</h2><p>使用一张 1:2 的长方形纸币或纸张，竖着摆放。</p></article>
+      <article class="step"><span class="number">02</span><div class="drawing"><svg viewBox="0 0 230 205"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#96523f"></path></marker></defs><rect class="paper-light" x="70" y="16" width="90" height="172" rx="3"></rect><path class="paper" d="M70 16 H115 V188 H70 Z"></path><path class="crease" d="M115 16 V188"></path><path class="arrow" d="M52 97 C68 89 77 90 98 96"></path><text class="label" x="115" y="199">对折后打开，留下中线</text></svg></div><h2>竖向对折后打开</h2><p>将左右两边对齐压平，再展开；中间的竖直折痕要清晰。</p></article>
+      <article class="step"><span class="number">03</span><div class="drawing"><svg viewBox="0 0 230 205"><rect class="paper-light" x="70" y="16" width="90" height="172" rx="3"></rect><path class="crease" d="M115 16 V188 M70 16 L115 86 L160 16 M70 86 H160"></path><path class="paper" d="M70 16 L115 86 L70 86 Z M160 16 L115 86 L160 86 Z" opacity=".48"></path><text class="label" x="115" y="199">只在上半部压出交叉折痕</text></svg></div><h2>上方折出交叉线</h2><p>上端左右角分别折向中点，压出交叉折痕后打开。</p></article>
+      <article class="step"><span class="number">04</span><div class="drawing"><svg viewBox="0 0 230 205"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#96523f"></path></marker></defs><path class="paper-light" d="M70 188 V86 L115 28 L160 86 V188 Z"></path><path class="paper" d="M70 86 L115 28 L160 86 Z"></path><path class="crease" d="M115 28 V86"></path><path class="arrow" d="M80 55 C91 64 99 71 108 80"></path><path class="arrow" d="M150 55 C139 64 131 71 122 80"></path><text class="label" x="115" y="199">捏住上方纸层，向内聚合</text></svg></div><h2>聚合成三角顶</h2><p>顺着交叉折痕，把上方两层往中间捏合，压成一个平整三角。</p></article>
+      <article class="step"><span class="number">05</span><div class="drawing"><svg viewBox="0 0 230 205"><path class="paper" d="M70 188 V83 L115 28 L160 83 V188 Z"></path><path class="paper-light" d="M70 83 L115 28 L160 83 Z"></path><path class="edge" d="M115 28 V188"></path><path class="crease" d="M70 83 H160"></path><text class="label" x="115" y="199">翻面后是“屋顶”形</text></svg></div><h2>翻到背面</h2><p>将整个纸型翻到背面；此时上方是三角，下方仍是一整片长方形。</p></article>
+      <article class="step"><span class="number">06</span><div class="drawing"><svg viewBox="0 0 230 205"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#96523f"></path></marker></defs><path class="paper" d="M22 58 H208 V148 H22 L5 103 Z"></path><path class="paper-light" d="M22 148 H208 V103 H5 L22 148 Z"></path><path class="crease" d="M22 103 H208"></path><path class="arrow" d="M116 169 C115 149 115 131 115 110"></path><text class="label" x="115" y="199">转横向，下半部向上对折</text></svg></div><h2>下半部向上对折</h2><p>将纸型转成横向，沿中部横线把下方纸层向上翻折并压平。</p></article>
+      <article class="step"><span class="number">07</span><div class="drawing"><svg viewBox="0 0 230 205"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#96523f"></path></marker></defs><path class="paper" d="M17 50 H213 V151 H17 L1 101 Z"></path><path class="paper-light" d="M17 91 H213 V119 H17 L2 105 Z"></path><path class="paper-light" d="M17 121 H213 V151 H17 L2 136 Z"></path><path class="edge" d="M17 91 H213 M17 121 H213"></path><path class="arrow" d="M113 36 C113 54 113 70 113 87"></path><path class="arrow" d="M113 166 C113 153 113 143 113 128"></path><text class="label" x="115" y="199">上方下折两次，打开下层</text></svg></div><h2>连续折出纸层</h2><p>上方纸层向下对折两次；随后打开最下方纸层，保留中间的窄条。</p></article>
+      <article class="step"><span class="number">08</span><div class="drawing"><svg viewBox="0 0 230 205"><defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#96523f"></path></marker></defs><path class="paper" d="M24 50 H208 V151 H24 L3 101 Z"></path><path class="paper-light" d="M24 82 H208 V112 H24 L3 97 Z"></path><path class="paper-light" d="M24 120 H208 V151 H24 L3 136 Z"></path><path class="edge" d="M24 82 H208 M24 120 H208"></path><path class="arrow" d="M55 100 C40 100 25 100 10 100"></path><path class="crease" d="M24 50 L3 101 L24 151"></path><text class="label" x="115" y="199">左右撑开纸层，并压平</text></svg></div><h2>撑开左侧纸层</h2><p>上面同样重复一次后，向左撑开层与层之间的纸面，最后压平固定。</p></article>
     </section>
   </main>
 </body>
